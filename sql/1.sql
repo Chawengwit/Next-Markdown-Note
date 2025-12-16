@@ -1,5 +1,6 @@
 create extension if not exists citext;
 create extension if not exists "uuid-ossp";
+
 create table if not exists users (
     id uuid primary key default uuid_generate_v4(),
     email citext unique not null,
