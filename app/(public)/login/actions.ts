@@ -13,7 +13,7 @@ import { error } from "console";
 
 const LoginFormSchema = z.object({
     username: z.string().min(1, "Username is required"),
-    password: z.string().min(6, "Password is required"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 type State = {
@@ -25,9 +25,12 @@ type State = {
 }
 
 export async function login(prevState: State, formData: FormData) {
+    const usernameValue = formData.get("username")?.toString() ?? "";
+    const passwordValue = formData.get("password")?.toString() ?? "";
+
     const validateFields = LoginFormSchema.safeParse({
-        username: formData.get("username"),
-        password: formData.get("password"),
+        username: usernameValue,
+        password: passwordValue,
     });
 
     if(!validateFields.success){
@@ -37,12 +40,9 @@ export async function login(prevState: State, formData: FormData) {
         }
     }
 
-    const username = formData.get("username");
-    const password = formData.get("password");
-
     const userRes = await sql(
         "SELECT * FROM users WHERE username = $1",
-        [username]
+        [usernameValue]
     );
 
     if(userRes.rowCount === 0){
@@ -56,7 +56,7 @@ export async function login(prevState: State, formData: FormData) {
 
     const user = userRes.rows[0];
 
-    const isMatch = await bcrypt.compare(password?.toString()!, user.password)
+    const isMatch = await bcrypt.compare(passwordValue, user.password)
 
     if(isMatch){
         const token = await new SignJWT({})
@@ -64,7 +64,7 @@ export async function login(prevState: State, formData: FormData) {
                 alg: "HS256",
                 typ: "JWT",
             })
-            .setSubject(user.id)
+            .setSubject(String(user.id))
             .setIssuedAt()
             .setExpirationTime("2w")
             .sign(new TextEncoder().encode(config.JWT_SECRET));
