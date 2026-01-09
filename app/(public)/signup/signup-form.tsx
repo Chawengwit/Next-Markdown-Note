@@ -1,11 +1,28 @@
 "use client"
 
+import { useActionState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+import { signup, State } from "./action";
+
 export default function SignupForm(){
+    const initialState: State = {
+        message: "",
+        errors: {},
+    };
+
+    const [state, dispatch] = useActionState(signup, initialState);
+
+    useEffect(() => {
+        if (state.success) {
+            window.location.href = "/dashboard";
+        }
+    }, [state.success]);
 
     return (
         <div className="flex flex-col gap-2 w-full">
             <h1 className="p-2 font-bold text-center text-yellow-300">Sign Up</h1>
-            <form action="" className="flex flex-col gap-2">
+            <form action={dispatch} className="flex flex-col gap-2">
                 <div className="flex flex-col gap-2">
                     <label>Email</label>
                     <input 

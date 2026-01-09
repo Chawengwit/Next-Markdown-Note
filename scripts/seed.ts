@@ -3,14 +3,14 @@ import bcrypt from "bcryptjs";
 
 
 import { getClient } from "../app/lip/server/db";
+import config from "@/app/lip/server/config";
 
 async function seed() {
     const client = getClient();
     await client.connect();
     client.query("BEGIN");
     try {
-        const saltRounds = 10;
-        const passwordHash = await bcrypt.hash("123123", saltRounds);
+        const passwordHash = await bcrypt.hash("123123", config.SALT_ROUNDS);
         
         await client.query(
             `INSERT INTO users (email, password_hash) VALUES ($1, $2)`,

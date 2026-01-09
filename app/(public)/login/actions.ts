@@ -53,15 +53,7 @@ export async function login(prevState: State, formData: FormData) {
             }
         }
 
-        console.log("userRes:", userRes);
-        console.log("userRes.rows:", userRes.rows[0]);
-
         const user = userRes.rows[0];
-
-        console.log("passwordValue:", passwordValue);
-        console.log("user.password_hash:", user.password_hash);
-
-
         const isMatch = await bcrypt.compare(passwordValue, user.password_hash)
 
         if(isMatch){
