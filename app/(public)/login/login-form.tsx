@@ -2,10 +2,10 @@
 
 import { useActionState } from "react";
 
-import { login } from "./actions";
+import { login, State } from "./actions";
 
 export default function LoginForm(){
-    const initialState = {
+    const initialState: State = {
         message: "",
         errors: {},
     };

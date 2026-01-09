@@ -16,7 +16,7 @@ const LoginFormSchema = z.object({
     password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-type State = {
+export type State = {
     errors?: {
         username?: string[];
         password?: string[];
