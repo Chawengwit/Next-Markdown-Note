@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { signup, State } from "./action";
 
 export default function SignupForm(){
+    const router = useRouter();
     const initialState: State = {
         message: "",
         errors: {},
@@ -15,9 +16,9 @@ export default function SignupForm(){
 
     useEffect(() => {
         if (state.success) {
-            window.location.href = "/dashboard";
+            router.push("/dashboard");
         }
-    }, [state.success]);
+    }, [state.success, router]);
 
     return (
         <div className="flex flex-col gap-2 w-full">
@@ -37,7 +38,7 @@ export default function SignupForm(){
                     <input 
                         id="password"
                         name="password"
-                        type="text" 
+                        type="password" 
                         className="bg-blue-700 p-2 text-white block w-full"
                     />
                 </div>
@@ -46,7 +47,7 @@ export default function SignupForm(){
                     <input 
                         id="confirmPassword"
                         name="confirmPassword"
-                        type="text" 
+                        type="password" 
                         className="bg-blue-700 p-2 text-white block w-full" 
                     />
                 </div>
