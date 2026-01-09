@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import { getClient } from "../app/lip/server/db";
 
 async function seed() {
-    const client = getClient("");
+    const client = getClient();
     await client.connect();
     client.query("BEGIN");
     try {

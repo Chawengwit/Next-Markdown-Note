@@ -1,6 +1,7 @@
 "use client"
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import { login, State } from "./actions";
 
@@ -11,21 +12,28 @@ export default function LoginForm(){
     };
 
     const [ state, dispatch ] = useActionState(login, initialState);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (state?.success) {
+            router.push("/dashboard");
+        }
+    }, [state?.success, router]);
 
     return (
         <div className="flex flex-col gap-2 w-full">
             <h1 className="bg-yellow-300 p-2 font-bold text-center text-black">Log In</h1>
             <form action={dispatch} className="flex flex-col gap-2">
                 <div className="flex flex-col gap-2">
-                    <label>Username</label>
+                    <label>Email</label>
                     <input 
-                        id="username"
-                        name="username"    
+                        id="email"
+                        name="email"    
                         type="text"
                         className="bg-blue-700 p-2 text-white block w-full"
                     />
                 </div>
-                {state?.errors?.username?.map((error: string, index: number) => 
+                {state?.errors?.email?.map((error: string, index: number) => 
                     <p key={index} className="text-red-500">{error}</p>
                 )}
 
