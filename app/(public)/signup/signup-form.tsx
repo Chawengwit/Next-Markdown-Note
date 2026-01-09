@@ -3,7 +3,7 @@
 import { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import { signup, State } from "./action";
+import { signup, State } from "./actions";
 
 export default function SignupForm(){
     const router = useRouter();
@@ -33,6 +33,9 @@ export default function SignupForm(){
                         className="bg-blue-700 p-2 text-white block w-full" 
                     />
                 </div>
+                { state?.errors?.email?.map((error: string, index: number) => 
+                    <p key={index} className="text-red-500">{error}</p>
+                )}
                 <div>
                     <label>Password</label>
                     <input 
@@ -42,6 +45,9 @@ export default function SignupForm(){
                         className="bg-blue-700 p-2 text-white block w-full"
                     />
                 </div>
+                { state?.errors?.password?.map((error: string, index: number) => 
+                    <p key={index} className="text-red-500">{error}</p>
+                )}
                 <div>
                     <label>Confirm Password</label>
                     <input 
@@ -51,7 +57,12 @@ export default function SignupForm(){
                         className="bg-blue-700 p-2 text-white block w-full" 
                     />
                 </div>
+                { state?.errors?.confirmPassword?.map((error: string, index: number) => 
+                    <p key={index} className="text-red-500">{error}</p>
+                )}
+                
                 <button type="submit" className="bg-green-600 p-2 font-bold text-white">Submit</button>  
+                {state?.message && <p className="text-red-600">{state?.message}</p> }
             </form>
         </div>
     );

@@ -1,8 +1,8 @@
-"user service";
+"use server";
 
 import { z } from "zod";
 import bcrypt from "bcryptjs";
-import { errors, SignJWT } from "jose";
+import { SignJWT } from "jose";
 import { cookies } from "next/headers";
 
 import { sql } from "@/app/lip/server/db";
@@ -24,7 +24,7 @@ export type State = {
     success?: boolean;
 }
 
-export async function signup(prevState: State, formData: FormData) {
+export async function signup(prevState: State, formData: FormData): Promise<State> {
     try {
         const emailValue = formData.get("email")?.toString() ?? "";
         const passwordValue = formData.get("password")?.toString() ?? "";
