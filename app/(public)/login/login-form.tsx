@@ -22,7 +22,7 @@ export default function LoginForm(){
 
     return (
         <div className="flex flex-col gap-2 w-full">
-            <h1 className="bg-yellow-300 p-2 font-bold text-center text-black">Log In</h1>
+            <h1 className="p-2 font-bold text-center text-yellow-300">Log In</h1>
             <form action={dispatch} className="flex flex-col gap-2">
                 <div className="flex flex-col gap-2">
                     <label>Email</label>
