@@ -5,6 +5,7 @@ loadEnvConfig(process.cwd());
 
 const config = {
     POSTGRES_URL: process.env.POSTGRES_URL || "postgresql://user:password@localhost:5432/mydb",
+    JWT_SECRET: process.env.JWT_SECRET || "secret123",
 };
 
 export default config;
