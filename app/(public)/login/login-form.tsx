@@ -49,7 +49,10 @@ export default function LoginForm(){
                     <p key={index} className="text-red-500">{error}</p>
                 )}
 
-                <button type="submit" className="bg-green-600 p-2 font-bold text-white">Submit</button>
+                <div className="flex gap-2 w-full justify-center">
+                    <a type="button" href="/" className="bg-red-600 p-2 font-bold text-white">Back</a>
+                    <button type="submit" className="bg-green-600 p-2 font-bold text-white">Submit</button>
+                </div>
                 {state?.message && <p className="text-red-600">{state?.message}</p>}
 
             </form>

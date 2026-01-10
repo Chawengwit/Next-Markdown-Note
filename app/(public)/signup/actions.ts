@@ -19,6 +19,7 @@ export type State = {
         email?: string[];
         password?: string[];
         confirmPassword?: string[];
+        default?: string[];
     };
     message?: string | null;
     success?: boolean;
