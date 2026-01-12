@@ -21,7 +21,12 @@ export function NotesProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useNotesState() {
-    return useContext(NotesContext);
+    const ctx = useContext(NotesContext);
+    if(!ctx){
+        throw new Error("useNotesState must be used within NotesProvider");
+    }
+
+    return ctx;
 }
 
 export function useNotesDispatch() {
