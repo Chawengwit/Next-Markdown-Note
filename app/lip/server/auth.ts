@@ -1,6 +1,9 @@
 import { cookies } from "next/headers";
-import config from "./config";
 import { jwtVerify } from "jose";
+import { sql } from "./db";
+
+import config from "./config";
+
 
 export default async function getJWTPayload() {
     const cookieStore = cookies();
@@ -10,6 +13,12 @@ export default async function getJWTPayload() {
     const { payload, protectedHeader } = await jwtVerify(token?.value!, secret);
     
     return payload;
+}
+
+export async function getCurrentUser(){
+    const payload = await getJWTPayload();
+    const userRes = await sql("SELECT * FROM users WHERE id = $1", [payload.sub]);
+    return userRes.rows[0];
 }
 
 

@@ -1,9 +1,11 @@
-export default function Page() {
+import { getCurrentUser } from "@/app/lip/server/auth";
+
+export default async function Page() {
+    const user = await getCurrentUser();
+
     return (
         <div className="overflow-auto max-h-screen p-2 flex-none w-1/3">
-            <div>Signed in as: email</div>
+            <div>Signed in as: {user.email}</div>
         </div>
     );
-
-    
 }
