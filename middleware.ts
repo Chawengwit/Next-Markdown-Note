@@ -10,23 +10,23 @@ export async function middleware(request: NextRequest){
         const token = request.cookies.get("jwt-token");
 
         if(!token || !token?.value){
-            const url = request.nextUrl.clone();
-            url.pathname = "/login";
-            
-            return NextResponse.redirect(url);
+            return NextResponse.redirect(new URL("/login", request.url));
         }
 
         try {
             const secret = new TextEncoder().encode(process.env.JWT_SECRET);
             const { payload } = await jwtVerify(token.value, secret);
+
+            // TODO next check role >> ADMIN 
+            // if(payload.role !== "ADMIN"){
+            //     return NextResponse.redirect(new URL("/403", request.url));
+            // }
+            
             return NextResponse.next();
 
         } catch (error){
             console.log(error);
-            const url = request.nextUrl.clone();
-            url.pathname = "/login";
-            
-            return NextResponse.redirect(url);
+            return NextResponse.redirect(new URL("/login", request.url));
         }
     }
 }
