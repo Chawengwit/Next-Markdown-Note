@@ -34,9 +34,6 @@ export function useNotesDispatch() {
 }
 
 function reducer(state: NotesState, action: any){
-    console.log(">>> state", state);
-    console.log(">>> action", action);
-
     switch(action.type) {
         default: 
         return state;
