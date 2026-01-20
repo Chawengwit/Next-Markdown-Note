@@ -12,8 +12,6 @@ export async function fetchNotes(parent_note_id?: string) {
     });
 
     const json = await notesRes.json();
-    console.log("json >> ", json);
-
     const transformedJson = json.map((note: any) => {
         return transformJsonToNote(note);
     });

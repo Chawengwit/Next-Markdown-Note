@@ -2,7 +2,7 @@ import { createContext, Dispatch, useContext, useReducer } from "react";
 import { NoteData } from "../lip/client/types"
 
 interface NotesState {
-    rootNotes: NoteData[]
+    rootNotes: NoteData[] | null
 }
 
 export const NotesContext = createContext({} as NotesState);
@@ -33,13 +33,22 @@ export function useNotesDispatch() {
     return useContext(NotesDispatchContext);
 }
 
+function setRootNotes(state: NotesState, action: any) {
+    return {
+        ...state,
+        rootNotes: action.payload 
+    }
+}
+
 function reducer(state: NotesState, action: any){
     switch(action.type) {
+        case "set_root_notes":
+            return setRootNotes(state, action)
         default: 
         return state;
     }
 }
 
 const initialState = {
-    rootNotes: []
+    rootNotes: null
 }
