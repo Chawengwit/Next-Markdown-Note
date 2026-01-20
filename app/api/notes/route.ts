@@ -39,3 +39,14 @@ export async function GET(request: Request) {
     return NextResponse.json(notesRes.rows);
 
 }
+
+export async function POST(request: Request){
+    const user = await getCurrentUser();
+    const noteRes = await sql(
+        "INSERT INTO notes (title, content, user_id) VALUES ('Untitled Note', 'Content of the note', $1) RETURNING *;",
+        [user.id]
+    );
+
+    return NextResponse.json(noteRes.rows[0]);
+    
+}

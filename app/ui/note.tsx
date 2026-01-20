@@ -11,4 +11,4 @@ export default function Note({ note }: { note: NoteData }){
             <div>{note.is_published ? "published" : "draft"}</div>
         </div>
     );
-}
+} 
