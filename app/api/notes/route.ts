@@ -44,5 +44,4 @@ export async function POST(request: Request){
     );
 
     return NextResponse.json(noteRes.rows[0]);
-    
 }
