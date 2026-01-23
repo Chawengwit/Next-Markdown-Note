@@ -5,13 +5,13 @@ import { useNotesDispatch, useNotesState } from "../contexts/notes-context";
 export default function Note({ note }: { note: NoteData }){
     const state = useNotesState();
     const dispatch = useNotesDispatch();
-    dispatch({
-        type: "update_current_drag_id",
-        payload: note.id
-    });
 
     function handleDragStart(e: React.DragEvent) {
         console.log("Drag Start.. ");
+        dispatch({
+            type: "update_current_drag_id",
+            payload: note.id
+        });
     }
 
     function handleDragLeave(e: React.DragEvent) {
