@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import { NoteData } from "../lip/client/types";
 import { useNotesDispatch, useNotesState } from "../contexts/notes-context";
+import { updateParent } from "../lip/client/api";
 
 export default function Note({ note }: { note: NoteData }){
     const state = useNotesState();
@@ -27,9 +28,22 @@ export default function Note({ note }: { note: NoteData }){
         e.preventDefault();
     }
 
-    function handleDragDrop(e: React.DragEvent) {
+    async function handleDragDrop(e: React.DragEvent) {
         console.log("Drop.. ", note.id);
         console.log("Current drag ID >> ", state.currentDragId);
+
+        if(note.id === state.currentDragId){
+            alert("Can not move into current position");
+            return;
+        }
+
+        // TODO: check if target note is descendent of current dragging note.
+
+
+        // update parent api call
+        await updateParent(state.currentDragId!, note.id);
+
+        // dispatch change_parent note
     }
 
     function handleDragEnd(e: React.DragEvent) {

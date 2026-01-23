@@ -28,6 +28,15 @@ export async function createNote() {
     return transformJsonToNote(json);
 }
 
+export async function updateParent(currentDragId: string, newParentDragId: string){
+    await fetch("api/notes/" + currentDragId + "/update_parent", {
+        method: "POST",
+        body: JSON.stringify({
+            parent_note_id: newParentDragId
+        })
+    });
+}
+
 function transformJsonToNote(note: any): NoteData {
     return {
         ...note,
