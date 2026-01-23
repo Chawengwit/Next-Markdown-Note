@@ -18,7 +18,6 @@ async function seed() {
 
         const result = await client.query(`SELECT id FROM users WHERE email = $1`, ["admin@mail.com"]);
         const resUser = result.rows[0];
-        console.log("resUser:", resUser);
 
         for (let i = 0; i < 10; i++) {
             console.log("create note:", i, "for demo"); 
@@ -34,7 +33,6 @@ async function seed() {
 
         // Create multiple users with notes
         for (let i = 0; i < 10; i++) {
-            console.log("create user:", i, "for demo"); 
             const email = faker.internet.email().toLowerCase();
             const tempPasswordHash = passwordHash; // same password for all demo users
 

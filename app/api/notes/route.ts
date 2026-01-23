@@ -19,15 +19,11 @@ export async function GET(request: Request) {
         "SELECT parent_note_id, count(*)::int FROM notes WHERE parent_note_id = any($1) GROUP BY parent_note_id;", [ids]
     );
 
-    console.log("child_notes_count >> ", child_notes_count);
-
     const childNotesCountMap = child_notes_count.rows.reduce((map: any, row: any) => {
         map[row.parent_note_id] = row.count;
         return map;
     }, {});
 
-    console.log("childNotesCountMap >> ",childNotesCountMap);
-    
     notesRes.rows.forEach((row) => {
         if(childNotesCountMap.hasOwnProperty(row.id)) {
             row.child_count = childNotesCountMap[row.id];

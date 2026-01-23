@@ -4,6 +4,8 @@ import { useNotesDispatch, useNotesState } from "../contexts/notes-context";
 import { useEffect } from "react";
 import { fetchNotes } from "../lip/client/api";
 import NoteList from "./note-list";
+import CreateNoteBtn from "./create-note-btn";
+import SortSelect from "./sort-select";
 
 export default function NoteContainer(){
     const state = useNotesState();
@@ -21,11 +23,22 @@ export default function NoteContainer(){
         init();
     }, [dispatch]);
 
+    function handleChange(value: string){
+        dispatch({
+            type: "sort_notes",
+            sortKey: value 
+        });
+    }
+
     if(!state.rootNotes) {
         return <div>loading..</div>;
     }
 
     return (
-        <NoteList notes={state.rootNotes} />
+        <div>
+            <CreateNoteBtn />
+            <SortSelect onChange={handleChange} />
+            <NoteList notes={state.rootNotes} />
+        </div>
     );
 }
