@@ -1,9 +1,12 @@
 import { createContext, Dispatch, useContext, useReducer } from "react";
 import { NoteData } from "../lip/client/types"
-import { createNote } from "../lip/client/api";
 
 interface NotesState {
-    rootNotes: NoteData[] | null
+    rootNotes: NoteData[];
+}
+
+const initialState = {
+    rootNotes: [],
 }
 
 export const NotesContext = createContext({} as NotesState);
@@ -50,10 +53,6 @@ function reducer(state: NotesState, action: any){
     }
 }
 
-const initialState = {
-    rootNotes: null
-}
-
 function setRootNotes(state: NotesState, action: any) {
     return {
         ...state,
@@ -62,7 +61,7 @@ function setRootNotes(state: NotesState, action: any) {
 }
 
 function addNewNoteToRootNotes(state: NotesState, action: any){
-    const newRootNotes = [...(state.rootNotes ?? [])];
+    const newRootNotes = [...state.rootNotes];
     newRootNotes.unshift(action.payload);
     return {
         ...state,
@@ -73,10 +72,10 @@ function addNewNoteToRootNotes(state: NotesState, action: any){
 
 function sortNotes(state: NotesState, action: any){
     const newState = {
-        ...state
+        ...state,
     };
 
-    sortNotesRecursively((newState.rootNotes ?? []), action.sortKey);
+    sortNotesRecursively(newState.rootNotes, action.sortKey);
 
     return newState;
 }
