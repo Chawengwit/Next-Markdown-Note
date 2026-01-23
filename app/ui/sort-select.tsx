@@ -6,7 +6,7 @@ export default function SortSelect({onChange }: {onChange: Function }) {
     }
 
     return (
-        <select onChange={handleChange} className="bg-blue-700 text-white p-2 border-0">
+        <select onChange={handleChange} className="bg-blue-700 text-white p-2 border-0 mb-2">
             <option value="title">Title A to Z</option>
             <option value="-title">Title Z to A</option>
             <option value="create_at">Created (old to new)</option>
