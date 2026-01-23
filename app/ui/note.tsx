@@ -1,8 +1,14 @@
 import { DateTime } from "luxon";
 import { NoteData } from "../lip/client/types";
+import { useNotesDispatch, useNotesState } from "../contexts/notes-context";
 
 export default function Note({ note }: { note: NoteData }){
-    
+    const state = useNotesState();
+    const dispatch = useNotesDispatch();
+    dispatch({
+        type: "update_current_drag_id",
+        payload: note.id
+    });
 
     function handleDragStart(e: React.DragEvent) {
         console.log("Drag Start.. ");
@@ -18,10 +24,12 @@ export default function Note({ note }: { note: NoteData }){
 
     function handleDragOver(e: React.DragEvent) {
         console.log("Over.. ");
+        e.preventDefault();
     }
 
     function handleDragDrop(e: React.DragEvent) {
-        console.log("Drop.. ");
+        console.log("Drop.. ", note.id);
+        console.log("Current drag ID >> ", state.currentDragId);
     }
 
     function handleDragEnd(e: React.DragEvent) {

@@ -3,10 +3,12 @@ import { NoteData } from "../lip/client/types"
 
 interface NotesState {
     rootNotes: NoteData[];
+    currentDragId: string | null;
 }
 
 const initialState = {
     rootNotes: [],
+    currentDragId: null
 }
 
 export const NotesContext = createContext({} as NotesState);
@@ -47,6 +49,9 @@ function reducer(state: NotesState, action: any){
 
         case "sort_notes":
             return sortNotes(state, action);
+
+        case "update_current_drag_id": 
+            return updateCurrentDragId(state, action)
 
         default: 
         return state;
@@ -102,4 +107,11 @@ function sortNotesRecursively(notes: NoteData[], sortKey: any){
         }
     });
 
+}
+
+function updateCurrentDragId(state: NotesState, action: any) {
+    return {
+        ...state,
+        currentDragId: action.payload
+    };
 }
